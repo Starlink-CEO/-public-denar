@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Јавен Денар — Каде оди јавниот денар</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --paper:#F6F7F3; --card:#FFFFFF; --ink:#1B2333; --mid:#697082;
+  --line:#DCDFE4; --denar:#453A8F; --denarsoft:#EEEBFA;
+  --stamp:#B3261E; --amber:#9A6200; --green:#2E7D32; --greensoft:#EAF4EA;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif}
+.mono{font-family:'IBM Plex Mono','Courier New',monospace}
+.serif{font-family:'IBM Plex Serif',Georgia,serif}
+header{background:var(--ink);color:#F2F2EE}
+.hwrap{max-width:720px;margin:0 auto;padding:16px 16px 14px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.brand{font-family:'IBM Plex Serif',Georgia,serif;font-weight:700;font-size:22px;letter-spacing:.03em}
+.brand span{color:#B7AEE8;font-size:15px}
+.tag{font-size:12.5px;color:#A9AFBD}
+.langs{display:flex;gap:4px}
+.langs button{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:5px 9px;
+  border-radius:6px;border:1px solid #3A4256;background:transparent;color:#A9AFBD;cursor:pointer}
+.langs button.on{border-color:#B7AEE8;background:#3B3470;color:#fff}
+.banner{font-size:12.5px;text-align:center;padding:7px 12px;border-bottom:1px solid}
+.banner.demo{background:#FBF3E4;border-color:#E8D9B8;color:#7A5A00}
+.banner.live{background:var(--greensoft);border-color:#BFDDBF;color:#1E5B22}
+.badge{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:10.5px;
+  padding:1px 7px;border-radius:4px;margin-right:8px;color:#fff;letter-spacing:.08em}
+main{max-width:720px;margin:0 auto;padding:16px 16px 40px}
+.tabs{display:flex;background:#EBECE8;border-radius:10px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;padding:9px 0;border-radius:8px;border:none;font-family:inherit;
+  font-size:14px;font-weight:600;cursor:pointer;background:transparent;color:var(--mid)}
+.tabs button.on{background:var(--card);color:var(--denar);box-shadow:0 1px 3px rgba(20,25,40,.12)}
+select{width:100%;padding:10px 12px;font-family:inherit;font-size:14px;
+  border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);margin-bottom:14px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px;margin-bottom:12px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.tid{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid);margin-bottom:4px}
+.tmuni{font-family:'IBM Plex Serif',Georgia,serif;font-weight:700;font-size:16px;margin-bottom:2px}
+.tsub{font-size:13.5px;margin-bottom:8px}
+.tsub b{font-family:'IBM Plex Mono',monospace}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:4px;
+  border:1px solid var(--line);color:var(--mid);background:#F2F3F0;white-space:nowrap}
+.chip.hot{border-color:#E4B7B3;color:var(--stamp);background:#FBEDEC}
+.chip.ok{border-color:#BFDDBF;color:var(--green);background:var(--greensoft)}
+.stamp{transform:rotate(-5deg);border:2px solid;border-radius:6px;text-align:center;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;line-height:1.1;
+  background:rgba(255,255,255,.65);flex-shrink:0;padding:4px 9px}
+.stamp .l{font-size:8px;letter-spacing:.14em}
+.stamp .n{font-size:17px}
+.stamp .n small{font-size:9px;opacity:.75}
+.stamp.big{padding:8px 14px}
+.stamp.big .l{font-size:11px}
+.stamp.big .n{font-size:26px}
+.stamp.big .n small{font-size:12px}
+.back{background:none;border:none;color:var(--denar);font-family:inherit;font-size:14px;
+  font-weight:600;cursor:pointer;padding:0;margin-bottom:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.chead{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px}
+.chead h2{font-family:'IBM Plex Serif',Georgia,serif;font-size:22px;margin:4px 0 2px}
+.csub{font-size:14px;color:var(--mid)}
+.ailbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--denar);margin-bottom:4px}
+.summ{font-size:15px;line-height:1.6;margin-bottom:16px}
+h3.sec{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mid);margin:0 0 4px}
+ul.flags{margin:6px 0 16px;padding-left:18px}
+ul.flags li{font-size:13.5px;line-height:1.55;margin-bottom:5px}
+ul.flags b{font-family:'IBM Plex Mono',monospace;font-size:12px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;
+  border-bottom:1px dashed var(--line);font-size:13.5px}
+.row span:first-child{color:var(--mid)}
+.row span:last-child{font-weight:600;text-align:right}
+.facts{margin-bottom:16px}
+.src{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--denar);
+  padding:7px 10px;border:1px solid var(--line);border-radius:6px;margin-bottom:6px;
+  background:#FAFAF8;display:block;text-decoration:none;word-break:break-all}
+.legal{background:var(--denarsoft);border:1px solid #CFC8EE;border-radius:8px;
+  padding:10px 12px;font-size:13px;line-height:1.55;color:#3A3277;margin:16px 0}
+.cta{width:100%;padding:12px 14px;background:var(--denar);color:#fff;border:none;
+  border-radius:8px;font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer}
+.cta.done{background:var(--green)}
+.rrow{margin-bottom:12px}
+.rtop{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:4px}
+.rnum{font-family:'IBM Plex Mono',monospace;color:var(--mid);font-size:12px;margin-right:8px}
+.rcnt{color:var(--mid);font-size:12px}
+.rscore{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.bar{height:8px;background:#EDEEEA;border-radius:4px;overflow:hidden}
+.bar div{height:100%;border-radius:4px;transition:width .6s ease}
+footer{margin-top:22px;font-size:11.5px;color:var(--mid);
+  font-family:'IBM Plex Mono',monospace;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div>
+      <div class="brand" id="brand"></div>
+      <div class="tag" id="tag"></div>
+    </div>
+    <div class="langs" id="langs"></div>
+  </div>
+</header>
+<div class="banner demo" id="banner"></div>
+<main>
+  <div class="tabs" id="tabs"></div>
+  <div id="view"></div>
+  <footer id="foot"></footer>
+</main>
+
+<script>
+/* ============ translations ============ */
+const T = {
+ mk:{appName:"ЈАВЕН ДЕНАР",tagline:"Каде оди јавниот денар",
+  demo:"Демо-податоци · договорите се измислени",live:"Живи отворени податоци од ЕСЈН (е-набавки)",
+  liveTag:"ЖИВО",demoTag:"ДЕМО",tabs:{feed:"Тендери",rank:"Ранг"},allMunis:"Сите општини",
+  risk:"РИЗИК",indicators:"Индикатори на ризик",noInd:"Нема регистрирани индикатори на ризик за овој договор.",
+  facts:"Податоци од договорот",value:"Вредност",contractor:"Добитник",bidders:"Понудувачи",
+  procedure:"Постапка",published:"Објавен",awarded:"Доделен",procOpen:"Отворена постапка",
+  procNeg:"Преговарање без оглас",sources:"Извори",srcNotice:"Оглас / известување во ЕСЈН",
+  riskNote:"Ова се индикатори на ризик, а не доказ за прекршок. Секое тврдење е проверливо во изворните документи.",
+  copy:"Копирај досие за новинари",copied:"✓ Досието е копирано",back:"← Назад кон тендерите",
+  rankTitle:"Општини по просечен ризик",rankSub:"Просечна оценка на договорите по институција",
+  flagged:"договори",denars:"ден.",aiLbl:"✦ АИ анализа · генерирана од изворните податоци",
+  dossier:"ДОСИЕ ЗА НОВИНАРИ",
+  lead:(m,v,c,s)=>`Институцијата ${m} додели договор од ${v} денари на „${c}“ за ${s}.`,
+  fl:{single_bidder:()=>"На тендерот се јавил само еден понудувач.",
+   new_company:p=>`Фирмата-добитник е регистрирана пред само ${p} недели.`,
+   price_above:p=>`Цената е ${p}% над просекот за слични договори.`,
+   same_owner:()=>"Два „конкурентни“ понудувачи имаат ист вистински сопственик.",
+   short_ad:p=>`Огласот бил отворен само ${p} дена.`,
+   repeat_winner:p=>`Истата фирма добила ${p} од последните 10 тендери на институцијата.`,
+   annex_increase:p=>`По потпишувањето, анекси ја зголемиле цената за ${p}%.`,
+   tailored_specs:()=>"Техничките спецификации одговараат само на еден производител.",
+   negotiated_no_pub:()=>"Договорот е доделен со преговарање, без јавен оглас."},
+  chip:{single_bidder:"1 понудувач",new_company:"Нова фирма",price_above:"Висока цена",
+   same_owner:"Ист сопственик",short_ad:"Краток оглас",repeat_winner:"Чест добитник",
+   annex_increase:"Анекси",tailored_specs:"Скроени услови",negotiated_no_pub:"Без оглас"}},
+ sq:{appName:"DENARI PUBLIK",tagline:"Ku shkon denari publik",
+  demo:"Të dhëna demo · kontratat janë të trilluara",live:"Të dhëna të hapura live nga SEPP (e-nabavki)",
+  liveTag:"LIVE",demoTag:"DEMO",tabs:{feed:"Tenderët",rank:"Renditja"},allMunis:"Të gjitha komunat",
+  risk:"RREZIKU",indicators:"Treguesit e rrezikut",noInd:"Nuk ka tregues rreziku të regjistruar për këtë kontratë.",
+  facts:"Të dhënat e kontratës",value:"Vlera",contractor:"Fituesi",bidders:"Ofertuesit",
+  procedure:"Procedura",published:"Shpallur",awarded:"Dhënë",procOpen:"Procedurë e hapur",
+  procNeg:"Negocim pa shpallje",sources:"Burimet",srcNotice:"Shpallja / njoftimi në SEPP",
+  riskNote:"Këta janë tregues rreziku, jo provë e shkeljes. Çdo pohim mund të verifikohet në dokumentet burimore.",
+  copy:"Kopjo dosjen për gazetarë",copied:"✓ Dosja u kopjua",back:"← Kthehu te tenderët",
+  rankTitle:"Komunat sipas rrezikut mesatar",rankSub:"Vlerësimi mesatar i kontratave sipas institucionit",
+  flagged:"kontrata",denars:"den.",aiLbl:"✦ Analizë AI · e gjeneruar nga të dhënat burimore",
+  dossier:"DOSJE PËR GAZETARË",
+  lead:(m,v,c,s)=>`Institucioni ${m} i dha kontratë prej ${v} denarësh firmës “${c}” për ${s}.`,
+  fl:{single_bidder:()=>"Në tender ka marrë pjesë vetëm një ofertues.",
+   new_company:p=>`Firma fituese është regjistruar vetëm ${p} javë më parë.`,
+   price_above:p=>`Çmimi është ${p}% mbi mesataren për kontrata të ngjashme.`,
+   same_owner:()=>"Dy ofertues 'konkurrentë' kanë të njëjtin pronar real.",
+   short_ad:p=>`Shpallja ka qenë e hapur vetëm ${p} ditë.`,
+   repeat_winner:p=>`E njëjta firmë ka fituar ${p} nga 10 tenderët e fundit.`,
+   annex_increase:p=>`Pas nënshkrimit, anekset e kanë rritur çmimin për ${p}%.`,
+   tailored_specs:()=>"Specifikimet teknike i përshtaten vetëm një prodhuesi.",
+   negotiated_no_pub:()=>"Kontrata është dhënë me negocim, pa shpallje publike."},
+  chip:{single_bidder:"1 ofertues",new_company:"Firmë e re",price_above:"Çmim i lartë",
+   same_owner:"Pronar i njëjtë",short_ad:"Shpallje e shkurtër",repeat_winner:"Fitues i shpeshtë",
+   annex_increase:"Anekse",tailored_specs:"Kushte të përshtatura",negotiated_no_pub:"Pa shpallje"}},
+ en:{appName:"PUBLIC DENAR",tagline:"Where the public denar goes",
+  demo:"Demo data · contracts are fictional",live:"Live open data from the ESPP (e-nabavki)",
+  liveTag:"LIVE",demoTag:"DEMO",tabs:{feed:"Tenders",rank:"Ranking"},allMunis:"All municipalities",
+  risk:"RISK",indicators:"Risk indicators",noInd:"No risk indicators recorded for this contract.",
+  facts:"Contract facts",value:"Value",contractor:"Winner",bidders:"Bidders",
+  procedure:"Procedure",published:"Published",awarded:"Awarded",procOpen:"Open procedure",
+  procNeg:"Negotiation without notice",sources:"Sources",srcNotice:"Notice in the ESPP",
+  riskNote:"These are risk indicators, not proof of wrongdoing. Every claim is checkable in the source documents.",
+  copy:"Copy journalist dossier",copied:"✓ Dossier copied",back:"← Back to tenders",
+  rankTitle:"Municipalities by average risk",rankSub:"Average contract score per institution",
+  flagged:"contracts",denars:"MKD",aiLbl:"✦ AI analysis · generated from the source data",
+  dossier:"JOURNALIST DOSSIER",
+  lead:(m,v,c,s)=>`The institution ${m} awarded a ${v} MKD contract to “${c}” for ${s}.`,
+  fl:{single_bidder:()=>"Only one bidder participated in the tender.",
+   new_company:p=>`The winning company was registered only ${p} weeks earlier.`,
+   price_above:p=>`The price is ${p}% above the average for similar contracts.`,
+   same_owner:()=>"Two 'competing' bidders share the same beneficial owner.",
+   short_ad:p=>`The notice was open for only ${p} days.`,
+   repeat_winner:p=>`The same company won ${p} of the last 10 tenders.`,
+   annex_increase:p=>`After signing, annexes raised the price by ${p}%.`,
+   tailored_specs:()=>"Technical specifications match only one manufacturer.",
+   negotiated_no_pub:()=>"The contract was awarded by negotiation, without a public notice."},
+  chip:{single_bidder:"Single bidder",new_company:"New company",price_above:"Price anomaly",
+   same_owner:"Same owner",short_ad:"Short notice",repeat_winner:"Repeat winner",
+   annex_increase:"Annexes",tailored_specs:"Tailored specs",negotiated_no_pub:"No notice"}}
+};
+
+/* ============ demo fallback (shown only if feed.json is missing) ============ */
+const DEMO = [
+ {id:"ЕСЈН-2026-0142",muni:{mk:"Куманово",sq:"Kumanovë",en:"Kumanovo"},
+  subject:{mk:"одржување на локални патишта",sq:"mirëmbajtjen e rrugëve lokale",en:"local road maintenance"},
+  value:4100000,contractor:"Патоградба Идеал ДООЕЛ",bidders:1,procedure:"open",
+  published:"02.05.2026",awarded:"21.05.2026",
+  flags:[{id:"single_bidder"},{id:"new_company",p:6},{id:"price_above",p:38}],risk:84},
+ {id:"ЕСЈН-2026-0117",muni:{mk:"Тетово",sq:"Tetovë",en:"Tetovo"},
+  subject:{mk:"гориво за греење на училишта",sq:"karburant për ngrohjen e shkollave",en:"school heating fuel"},
+  value:7900000,contractor:"Термо Балкан ДООЕЛ",bidders:2,procedure:"open",
+  published:"20.03.2026",awarded:"14.04.2026",
+  flags:[{id:"same_owner"},{id:"price_above",p:22}],risk:78},
+ {id:"ЕСЈН-2026-0163",muni:{mk:"Битола",sq:"Manastir",en:"Bitola"},
+  subject:{mk:"ЛЕД улично осветлување",sq:"ndriçim rrugor LED",en:"LED street lighting"},
+  value:12400000,contractor:"Електра Нова ДООЕЛ",bidders:2,procedure:"open",
+  published:"28.04.2026",awarded:"19.05.2026",
+  flags:[{id:"repeat_winner",p:9},{id:"short_ad",p:6}],risk:71},
+ {id:"ЕСЈН-2026-0177",muni:{mk:"Гостивар",sq:"Gostivar",en:"Gostivar"},
+  subject:{mk:"реновирање на детска градинка",sq:"rinovimin e kopshtit të fëmijëve",en:"kindergarten renovation"},
+  value:6400000,contractor:"Конструкт Плус ДОО",bidders:4,procedure:"open",
+  published:"10.04.2026",awarded:"18.05.2026",flags:[],risk:18}
+];
+
+/* ============ state ============ */
+let S = {lang:"mk", tab:"feed", open:null, muni:"all", data:DEMO, live:false, copied:false};
+
+/* ============ helpers ============ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,
+  c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const rc = r => r>=70?"var(--stamp)":r>=40?"var(--amber)":"var(--green)";
+const muniOf = (c,l) => (c.muni&&(c.muni[l]||c.muni.mk||c.muni.en)) || c.authority || "—";
+const subjOf = (c,l) => (c.subject&&(c.subject[l]||c.subject.mk||c.subject.en)) || "";
+const summOf = (c,l) => c.summary&&(c.summary[l]||c.summary.mk||c.summary.en);
+const tmpl = (c,l) => {
+  const t=T[l];
+  return t.lead(muniOf(c,l),fmt(c.value),c.contractor,subjOf(c,l))
+    +(c.flags&&c.flags.length?" "+c.flags.map(f=>t.fl[f.id]?t.fl[f.id](f.p):"").join(" "):"");
+};
+
+/* ============ rendering ============ */
+function stamp(r,big){
+  return `<div class="stamp ${big?'big':''}" style="border-color:${rc(r)};color:${rc(r)}">
+    <div class="l">${T[S.lang].risk}</div><div class="n">${r}<small>/100</small></div></div>`;
+}
+function chipsOf(c){
+  const t=T[S.lang];
+  if(!c.flags||!c.flags.length) return `<span class="chip ok">✓ 0</span>`;
+  return c.flags.map(f=>`<span class="chip ${c.risk>=70?'hot':''}">${esc(t.chip[f.id]||f.id)}</span>`).join("");
+}
+function renderShell(){
+  const t=T[S.lang];
+  $("brand").innerHTML=`${t.appName} <span>ден</span>`;
+  $("tag").textContent=t.tagline;
+  $("langs").innerHTML=["mk","sq","en"].map(l=>
+    `<button class="${S.lang===l?'on':''}" onclick="setLang('${l}')">${l.toUpperCase()}</button>`).join("");
+  const b=$("banner");
+  b.className="banner "+(S.live?"live":"demo");
+  b.innerHTML=`<span class="badge" style="background:${S.live?'var(--green)':'var(--stamp)'}">
+    ${S.live?t.liveTag:t.demoTag}</span>${S.live?esc(t.live):"⚠️ "+esc(t.demo)}`;
+  $("tabs").innerHTML=["feed","rank"].map(k=>
+    `<button class="${S.tab===k?'on':''}" onclick="setTab('${k}')">${t.tabs[k]}</button>`).join("");
+  $("foot").textContent=S.live?t.live:t.demo;
+}
+function renderFeed(){
+  const t=T[S.lang], l=S.lang;
+  const munis=[...new Set(S.data.map(c=>muniOf(c,l)))].sort();
+  const list=S.data.filter(c=>S.muni==="all"||muniOf(c,l)===S.muni).sort((a,b)=>b.risk-a.risk);
+  $("view").innerHTML=
+    `<select onchange="setMuni(this.value)">
+      <option value="all">${t.allMunis}</option>
+      ${munis.map(m=>`<option ${S.muni===m?'selected':''} value="${esc(m)}">${esc(m)}</option>`).join("")}
+    </select>`+
+    list.map((c,i)=>`<div class="tcard" style="border-left:4px solid ${rc(c.risk)}" onclick="openCase(${S.data.indexOf(c)})">
+      <div style="flex:1;min-width:0">
+        <div class="tid">${esc(c.id)}</div>
+        <div class="tmuni">${esc(muniOf(c,l))}</div>
+        <div class="tsub">${esc(subjOf(c,l))} · <b>${fmt(c.value)} ${t.denars}</b></div>
+        <div class="chips">${chipsOf(c)}</div>
+      </div>${stamp(c.risk,false)}</div>`).join("");
+}
+function renderCase(){
+  const c=S.data[S.open], t=T[S.lang], l=S.lang;
+  const ai=summOf(c,l);
+  const rows=[[t.value,`${fmt(c.value)} ${t.denars}`],[t.contractor,c.contractor],
+    [t.bidders,c.bidders],[t.procedure,c.procedure==="neg"?t.procNeg:t.procOpen],
+    [t.published,c.published],[t.awarded,c.awarded]];
+  $("view").innerHTML=
+    `<button class="back" onclick="closeCase()">${t.back}</button>
+    <div class="panel">
+      <div class="chead"><div>
+        <div class="tid">${esc(c.id)}</div>
+        <h2>${esc(muniOf(c,l))}</h2>
+        <div class="csub">${esc(subjOf(c,l))}</div>
+      </div>${stamp(c.risk,true)}</div>
+      ${ai?`<div class="ailbl">${t.aiLbl}</div>`:""}
+      <div class="summ">${esc(ai||tmpl(c,l))}</div>
+      <h3 class="sec">${t.indicators}</h3>
+      ${c.flags&&c.flags.length
+        ?`<ul class="flags">${c.flags.map(f=>`<li><b>${esc(t.chip[f.id]||f.id)}</b> — ${esc(t.fl[f.id]?t.fl[f.id](f.p):"")}</li>`).join("")}</ul>`
+        :`<p style="font-size:13.5px;color:var(--green);margin:6px 0 16px">${t.noInd}</p>`}
+      <h3 class="sec">${t.facts}</h3>
+      <div class="facts">${rows.map(r=>`<div class="row"><span>${r[0]}</span><span>${esc(r[1])}</span></div>`).join("")}</div>
+      <h3 class="sec">${t.sources}</h3>
+      ${c.source_url
+        ?`<a class="src" target="_blank" rel="noopener" href="${esc(c.source_url)}">📄 ${t.srcNotice} ↗</a>`
+        :`<span class="src">📄 ${t.srcNotice}</span>`}
+      <div class="legal">⚖️ ${t.riskNote}</div>
+      <button class="cta ${S.copied?'done':''}" onclick="copyDossier()">${S.copied?t.copied:t.copy}</button>
+    </div>`;
+}
+function renderRank(){
+  const t=T[S.lang], l=S.lang, agg={};
+  S.data.forEach(c=>{const m=muniOf(c,l);(agg[m]=agg[m]||{s:0,n:0});agg[m].s+=c.risk;agg[m].n++;});
+  const rows=Object.entries(agg).map(([m,a])=>({m,avg:Math.round(a.s/a.n),n:a.n}))
+    .sort((a,b)=>b.avg-a.avg);
+  $("view").innerHTML=`<div class="panel">
+    <h2 class="serif" style="font-size:19px;margin-bottom:2px">${t.rankTitle}</h2>
+    <div style="font-size:13px;color:var(--mid);margin-bottom:16px">${t.rankSub}</div>
+    ${rows.map((r,i)=>`<div class="rrow">
+      <div class="rtop"><span><span class="rnum">${String(i+1).padStart(2,"0")}</span>
+        <b>${esc(r.m)}</b> <span class="rcnt">· ${r.n} ${t.flagged}</span></span>
+        <span class="rscore" style="color:${rc(r.avg)}">${r.avg}</span></div>
+      <div class="bar"><div style="width:${r.avg}%;background:${rc(r.avg)}"></div></div>
+    </div>`).join("")}</div>`;
+}
+function render(){
+  renderShell();
+  if(S.tab==="rank") renderRank();
+  else if(S.open!==null) renderCase();
+  else renderFeed();
+  window.scrollTo(0,0);
+}
+
+/* ============ actions ============ */
+function setLang(l){S.lang=l;render();}
+function setTab(k){S.tab=k;S.open=null;render();}
+function setMuni(m){S.muni=m;renderFeed();}
+function openCase(i){S.open=i;S.copied=false;render();}
+function closeCase(){S.open=null;render();}
+function copyDossier(){
+  const c=S.data[S.open], t=T[S.lang], l=S.lang;
+  const txt=[t.dossier,"────────────────────────────",
+    `${c.id} · ${muniOf(c,l)}`, summOf(c,l)||tmpl(c,l),"",
+    `${t.value}: ${fmt(c.value)} ${t.denars}`,`${t.contractor}: ${c.contractor}`,
+    `${t.bidders}: ${c.bidders}`,
+    `${t.procedure}: ${c.procedure==="neg"?t.procNeg:t.procOpen}`,
+    `${t.published}: ${c.published} · ${t.awarded}: ${c.awarded}`,
+    `${t.risk}: ${c.risk}/100`,
+    c.source_url?`URL: ${c.source_url}`:"","",t.riskNote].filter(x=>x!=="" || true).join("\n");
+  const done=()=>{S.copied=true;render();setTimeout(()=>{S.copied=false;if(S.open!==null)render();},2200);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done,()=>fb(txt,done));
+  } else fb(txt,done);
+}
+function fb(txt,done){
+  const ta=document.createElement("textarea");ta.value=txt;
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");done();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ============ load the live feed ============ */
+render();
+fetch("site/feed.json?t="+Date.now())
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(j=>{
+    if(Array.isArray(j)&&j.length&&j[0].id&&typeof j[0].risk==="number"){
+      S.data=j; S.live=true; S.open=null; render();
+    }
+  })
+  .catch(()=>{});
+</script>
+</body>
+</html>
